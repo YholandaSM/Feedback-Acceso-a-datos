@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2019 17:06:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="feedbackdatos.Coches" table="coches" catalog="feedback" optimistic-lock="version">
+        <id name="idCoche" type="byte">
+            <column name="id_coche" />
+            <generator class="assigned" />
+        </id>
+        <property name="matricula" type="string">
+            <column name="matricula" length="8" not-null="true" />
+        </property>
+        <property name="precio" type="java.lang.Float">
+            <column name="precio" precision="6" />
+        </property>
+        <property name="color" type="string">
+            <column name="color" length="15" />
+        </property>
+        <property name="marca" type="string">
+            <column name="marca" length="20" />
+        </property>
+        <property name="fechaMatriculacion" type="date">
+            <column name="fecha_matriculacion" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

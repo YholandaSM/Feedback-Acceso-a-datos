@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2019 17:06:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="feedbackdatos.Reservas" table="reservas" catalog="feedback" optimistic-lock="version">
+        <id name="idReserva" type="byte">
+            <column name="id_reserva" />
+            <generator class="assigned" />
+        </id>
+        <property name="idCliente" type="byte">
+            <column name="id_cliente" not-null="true" />
+        </property>
+        <property name="idCoche" type="byte">
+            <column name="id_coche" not-null="true" />
+        </property>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="10" not-null="true" />
+        </property>
+        <property name="fechaDevolucion" type="date">
+            <column name="fecha_devolucion" length="10" not-null="true" />
+        </property>
+        <property name="precioTotal" type="java.lang.Float">
+            <column name="precio_total" precision="6" />
+        </property>
+        <property name="litros" type="java.lang.Float">
+            <column name="litros" precision="3" />
+        </property>
+    </class>
+</hibernate-mapping>
