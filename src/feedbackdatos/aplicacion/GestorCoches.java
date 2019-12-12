@@ -8,6 +8,7 @@ package feedbackdatos.aplicacion;
 import feedbackdatos.Coches;
 import feedbackdatos.HibernateUtil;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

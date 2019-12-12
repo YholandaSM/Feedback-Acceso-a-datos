@@ -12,7 +12,16 @@ import org.hibernate.exception.ConstraintViolationException;
  * @author Yolanda
  */
 public class GestorClientes {
-
+    
+    
+    /**
+     * 
+     * @param dni
+     * @param nombre
+     * @param apellidos
+     * @param direc
+     * @param telefono 
+     */
     public void altaCliente(String dni, String nombre, String apellidos,
             String direc, String telefono) {
 
@@ -48,6 +57,15 @@ public class GestorClientes {
         
         
 
+    }
+    
+    
+    
+    public void bajaCoche(){
+        
+        
+        
+        
     }
 
 }

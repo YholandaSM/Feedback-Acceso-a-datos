@@ -18,12 +18,12 @@ public class Principal {
         
       
         
-       //GestorCoches gestorCoches=new GestorCoches();
-       // gestorCoches.altaCoche("21115F", 8000, "Verde", "Renaulr", new Date("2016/09/10"));
+       GestorCoches gestorCoches=new GestorCoches();
+       gestorCoches.altaCoche("20001Ñ", 8000, "Blanco", "Renault", new Date("2016/09/10"));
         
         
-        GestorClientes gClientes= new GestorClientes();
-        gClientes.altaCliente("45620111A", "Pepe", "Gómez", "Calle del Zapato", "123456789");
+       // GestorClientes gClientes= new GestorClientes();
+       // gClientes.altaCliente("45620111A", "Marcelo", "Lópex", "Calle del Hueso", "356888112");
         
         
     }

@@ -22,24 +22,24 @@ public class GetId {
     Session sesion = factoria.openSession();
     Transaction tx = sesion.beginTransaction();
 
-    public byte getIdCoche() {
+    public int getIdCoche() {
 
         Query query = sesion.createQuery("select coalesce(max(idCoche),1) from Coches");
 
-        byte id = (byte) query.uniqueResult();
+        int id = (int) query.uniqueResult();
 
-        return (byte) (id + 1);
+        return (int) (id + 1);
 
     }
     
     
-    public byte getIdCliente() {
+    public int getIdCliente() {
 
         Query query = sesion.createQuery("select coalesce(max(idCliente),1) from Clientes");
 
-        byte id = (byte) query.uniqueResult();
+        int id = (int) query.uniqueResult();
 
-        return (byte) (id + 1);
+        return (int) (id + 1);
 
     }
 
