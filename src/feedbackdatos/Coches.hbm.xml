@@ -4,7 +4,7 @@
 <!-- Generated 11-dic-2019 17:06:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="feedbackdatos.Coches" table="coches" catalog="feedback" optimistic-lock="version">
-        <id name="idCoche" type="byte">
+        <id name="idCoche" type="int">
             <column name="id_coche" />
             <generator class="assigned" />
         </id>

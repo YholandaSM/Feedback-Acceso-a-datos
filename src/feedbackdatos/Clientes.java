@@ -9,7 +9,7 @@ package feedbackdatos;
 public class Clientes  implements java.io.Serializable {
 
 
-     private byte idCliente;
+     private int idCliente;
      private String dni;
      private String nombre;
      private String apellidos;
@@ -20,12 +20,12 @@ public class Clientes  implements java.io.Serializable {
     }
 
 	
-    public Clientes(byte idCliente, String dni, String nombre) {
+    public Clientes(int idCliente, String dni, String nombre) {
         this.idCliente = idCliente;
         this.dni = dni;
         this.nombre = nombre;
     }
-    public Clientes(byte idCliente, String dni, String nombre, String apellidos, String direccion, String telefono) {
+    public Clientes(int idCliente, String dni, String nombre, String apellidos, String direccion, String telefono) {
        this.idCliente = idCliente;
        this.dni = dni;
        this.nombre = nombre;
@@ -34,11 +34,11 @@ public class Clientes  implements java.io.Serializable {
        this.telefono = telefono;
     }
    
-    public byte getIdCliente() {
+    public int getIdCliente() {
         return this.idCliente;
     }
     
-    public void setIdCliente(byte idCliente) {
+    public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
     public String getDni() {

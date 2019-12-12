@@ -10,9 +10,9 @@ import java.util.Date;
 public class Reservas  implements java.io.Serializable {
 
 
-     private byte idReserva;
-     private byte idCliente;
-     private byte idCoche;
+     private int idReserva;
+     private int idCliente;
+     private int idCoche;
      private Date fechaInicio;
      private Date fechaDevolucion;
      private Float precioTotal;
@@ -22,14 +22,14 @@ public class Reservas  implements java.io.Serializable {
     }
 
 	
-    public Reservas(byte idReserva, byte idCliente, byte idCoche, Date fechaInicio, Date fechaDevolucion) {
+    public Reservas(int idReserva, int idCliente, int idCoche, Date fechaInicio, Date fechaDevolucion) {
         this.idReserva = idReserva;
         this.idCliente = idCliente;
         this.idCoche = idCoche;
         this.fechaInicio = fechaInicio;
         this.fechaDevolucion = fechaDevolucion;
     }
-    public Reservas(byte idReserva, byte idCliente, byte idCoche, Date fechaInicio, Date fechaDevolucion, Float precioTotal, Float litros) {
+    public Reservas(int idReserva, int idCliente, int idCoche, Date fechaInicio, Date fechaDevolucion, Float precioTotal, Float litros) {
        this.idReserva = idReserva;
        this.idCliente = idCliente;
        this.idCoche = idCoche;
@@ -39,25 +39,25 @@ public class Reservas  implements java.io.Serializable {
        this.litros = litros;
     }
    
-    public byte getIdReserva() {
+    public int getIdReserva() {
         return this.idReserva;
     }
     
-    public void setIdReserva(byte idReserva) {
+    public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
     }
-    public byte getIdCliente() {
+    public int getIdCliente() {
         return this.idCliente;
     }
     
-    public void setIdCliente(byte idCliente) {
+    public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
-    public byte getIdCoche() {
+    public int getIdCoche() {
         return this.idCoche;
     }
     
-    public void setIdCoche(byte idCoche) {
+    public void setIdCoche(int idCoche) {
         this.idCoche = idCoche;
     }
     public Date getFechaInicio() {

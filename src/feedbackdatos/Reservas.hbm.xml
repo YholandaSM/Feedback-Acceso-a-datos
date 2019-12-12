@@ -4,14 +4,14 @@
 <!-- Generated 11-dic-2019 17:06:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="feedbackdatos.Reservas" table="reservas" catalog="feedback" optimistic-lock="version">
-        <id name="idReserva" type="byte">
+        <id name="idReserva" type="int">
             <column name="id_reserva" />
             <generator class="assigned" />
         </id>
-        <property name="idCliente" type="byte">
+        <property name="idCliente" type="int">
             <column name="id_cliente" not-null="true" />
         </property>
-        <property name="idCoche" type="byte">
+        <property name="idCoche" type="int">
             <column name="id_coche" not-null="true" />
         </property>
         <property name="fechaInicio" type="date">
