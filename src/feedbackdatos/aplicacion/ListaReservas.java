@@ -20,13 +20,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ListaReservas {
     
     private ArrayList<Reservas> listaReserva;
-    private String nombre;
-    
-    public ListaReservas(ArrayList<Reservas> listaReserva, String nombre){
+  
+    public ListaReservas(ArrayList<Reservas> listaReserva ){
         
         super();
         this.listaReserva=listaReserva;
-        this.nombre=nombre;
+         
         
         
         
@@ -35,7 +34,7 @@ public class ListaReservas {
     public ListaReservas(){}
     
     
-    @XmlElementWrapper(name="ListaReservas")
+    @XmlElementWrapper(name="listaReserva")
     @XmlElement(name="Reserva")
     public ArrayList<Reservas> getListaReserva() {
         return listaReserva;
@@ -44,14 +43,9 @@ public class ListaReservas {
     public void setListaReserva(ArrayList<Reservas> listaReserva) {
         this.listaReserva = listaReserva;
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    
+    
+   
         
         
         

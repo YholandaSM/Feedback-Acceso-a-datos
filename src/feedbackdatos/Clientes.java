@@ -77,6 +77,11 @@ public class Clientes  implements java.io.Serializable {
         this.telefono = telefono;
     }
 
+    @Override
+    public String toString() {
+        return "Clientes{" + "idCliente=" + idCliente + ", dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", telefono=" + telefono + '}';
+    }
+
 
 
 

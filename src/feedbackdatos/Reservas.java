@@ -3,6 +3,7 @@ package feedbackdatos;
 
 
 import java.util.Date;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -43,6 +44,7 @@ public class Reservas  implements java.io.Serializable {
        this.litros = litros;
     }
    
+    @XmlElement
     public int getIdReserva() {
         return this.idReserva;
     }
@@ -50,6 +52,9 @@ public class Reservas  implements java.io.Serializable {
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
     }
+    
+    
+    @XmlElement
     public int getIdCliente() {
         return this.idCliente;
     }
@@ -57,6 +62,8 @@ public class Reservas  implements java.io.Serializable {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+    
+    @XmlElement
     public int getIdCoche() {
         return this.idCoche;
     }
@@ -64,6 +71,8 @@ public class Reservas  implements java.io.Serializable {
     public void setIdCoche(int idCoche) {
         this.idCoche = idCoche;
     }
+    
+    @XmlElement
     public Date getFechaInicio() {
         return this.fechaInicio;
     }
@@ -71,6 +80,8 @@ public class Reservas  implements java.io.Serializable {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
+    
+    @XmlElement
     public Date getFechaDevolucion() {
         return this.fechaDevolucion;
     }
@@ -78,6 +89,8 @@ public class Reservas  implements java.io.Serializable {
     public void setFechaDevolucion(Date fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
+    
+    @XmlElement
     public Float getPrecioTotal() {
         return this.precioTotal;
     }
@@ -85,6 +98,9 @@ public class Reservas  implements java.io.Serializable {
     public void setPrecioTotal(Float precioTotal) {
         this.precioTotal = precioTotal;
     }
+    
+    
+    @XmlElement
     public Float getLitros() {
         return this.litros;
     }

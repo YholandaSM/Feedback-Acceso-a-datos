@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import javax.swing.JOptionPane;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -104,11 +106,38 @@ public class Consultas {
     }
 
     /**
+     * Método que devuelve una lista con todas las reservas que existen en BBDD
+     *
+     * @return
+     */
+    public static ArrayList<Reservas> getReservas() {
+
+        SessionFactory factoria = HibernateUtil.getSessionFactory();
+        Session sesion = factoria.openSession();
+
+        String hql = " from Reservas";
+
+        Query query = sesion.createQuery(hql);
+
+        ArrayList<Reservas> lista = (ArrayList<Reservas>) query.list();
+
+        if (lista.size() == 0) {
+            System.out.println("No hay reservas");
+        }
+        return lista;
+
+    }
+
+    /**
      * *********************APARTADO
      * 3******************************************
      */
     /**
-     * Método que consulta clientes por diferentes criterios: nombre y apellidos
+     * Método que consulta clientes por diferentes criterios: nombre y
+     * apellidos. Hay 4 posibilidades a la hora de introducir criyerios: 1 Que
+     * no introduzca nombre ni apellido. (Se listarán todos los clientes) 2 Que
+     * introduzca sólo el apellido 3 Que introduzca sólo el nombre 4 Que
+     * introduzca nombre y apellido
      *
      * @param nombre
      * @param apellidos
@@ -119,20 +148,34 @@ public class Consultas {
         Session sesion = factoria.openSession();
 
         String hql = "";
+        Query query = null;
         //Construimos las querys en función de los parámetros que entran
-        if (nombre == null) {
-            //por apellido
-            hql = " from Clientes where apellidos =:apellidos";
-        } else if (apellidos == null) {
-            //por nombre
-            hql = " from Clientes where nombre =:nombre";
+        //1->No introduce ni nombre ni apellido
+        if ((nombre == null || nombre.equals("")) && (apellidos == null || apellidos.equals(""))) {
+            hql = " from Clientes";
+            query = sesion.createQuery(hql);
         } else {
+            if ((nombre == null || nombre.equals("")) && apellidos.length() > 0) {
+                //2->Introduce apellido
+                hql = " from Clientes where apellidos =:apellidos";
+                query = sesion.createQuery(hql);
+                query.setParameter("apellidos", apellidos);
+            } else if ((apellidos == null || apellidos.equals("")) && nombre.length() > 0) {
+                //3->Introduce nombre
+                hql = " from Clientes where nombre =:nombre";
+                query = sesion.createQuery(hql);
+                query.setParameter("nombre", nombre);
+            } else {
 
-            //por apellido y por nombre
-            hql = " from Clientes where nombre =:nombre and apellidos =:apellidos";
+                //4->Introduce nombre y apellido
+                hql = " from Clientes where nombre =:nombre and apellidos =:apellidos";
+                query = sesion.createQuery(hql);
+                query.setParameter("nombre", nombre);
+                query.setParameter("apellidos", apellidos);
+            }
+
         }
 
-        Query query = sesion.createQuery(hql);
         List<Clientes> lista = query.list();
 
         for (Clientes c : lista) {
@@ -155,20 +198,39 @@ public class Consultas {
         Session sesion = factoria.openSession();
 
         String hql = "";
-        //Construimos las querys en función de los parámetros que entran
-        if (matricula == null) {
-            //por marca
-            hql = " from Coches where marca =:marca";
-        } else if (marca == null) {
-            //por matrícula
-            hql = " from Coches where matricula =:matricula";
+        Query query = null;
+
+        //1->No introducen ningún criterio(Se listarán todos los coches)
+        if ((matricula == null || matricula.equals("")) && (marca == null || marca.equals(""))) {
+
+            hql = " from Coches";
+
+            query = sesion.createQuery(hql);
         } else {
 
-            //por marca y por matricula
-            hql = " from Coches where matricula =:matricula and marca =:marca";
+            //Construimos las querys en función de los parámetros que entran
+            if (matricula == null || matricula.equals("")) {
+                //2->por marca
+                hql = " from Coches where marca =:marca";
+                query = sesion.createQuery(hql);
+                query.setParameter("marca", marca);
+            } else if (marca == null || marca.endsWith("")) {
+                //3->por matrícula
+                hql = " from Coches where matricula =:matricula";
+                query = sesion.createQuery(hql);
+                query.setParameter("matricula", matricula);
+            } else {
+
+                //4->por marca y por matricula
+                hql = " from Coches where matricula =:matricula and marca =:marca";
+                query = sesion.createQuery(hql);
+                query.setParameter("marca", marca);
+                query.setParameter("matricula", matricula);
+            }
+
         }
 
-        Query query = sesion.createQuery(hql);
+        query = sesion.createQuery(hql);
         List<Coches> lista = query.list();
 
         for (Coches c : lista) {
@@ -183,16 +245,16 @@ public class Consultas {
      * *******************APARTADO 4**************************
      */
     /**
-     * 4.a-> Método que ofrece un listado de matrículas y números de reserva de
+     * 4.a  Método que ofrece un listado de matrículas y números de reserva de
      * los coches que están reservados hoy.
      *
      */
-    public void listadoReservasHoy() {
+    public static void listadoReservasHoy() {
 
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
 
-        String hql = " form Reservas r, Coches c where now() between r.fechaInicio and "
+        String hql = " from Reservas r, Coches c where now() between r.fechaInicio and "
                 + " r.fechaDevolucion and r.idCoche=c.IdCoche order by c.matricula";
 
         Query query = sesion.createQuery(hql);
@@ -214,38 +276,44 @@ public class Consultas {
     }
 
     /**
-     * 4.b-> Método que recupera la lista de los clientes con reservas
+     * 4.b  Método que recupera la lista de los clientes con reservas
      * pendientes (aquéllas en las que la fecha de inicio es posterior a la
      * fecha de hoy)
      */
-    public void consultaReservasPendientes() {
+    public static void consultaReservasPendientes() {
 
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
 
-        String hql = " form Reservas r, Clientes c where r.fechaInicio > now()"
+        String hql = " from Reservas r, Clientes c where r.fechaInicio > now()"
                 + " and r.idCliente= c.idCliente";
+        try {
 
-        Query query = sesion.createQuery(hql);
-        Iterator q = query.iterate();
+            Query query = sesion.createQuery(hql);
+            Iterator q = query.iterate();
 
-        Object par[] = (Object[]) q.next();
-        //Consultamos cada reserva, será el primer objeto del array
-        Reservas reserva = (Reservas) par[0];
-        //Consultamos cada coche, será el segundo objeto del array
-        Clientes clientes = (Clientes) par[1];
+            Object par[] = (Object[]) q.next();
+            //Consultamos cada reserva, será el primer objeto del array
+            Reservas reserva = (Reservas) par[0];
+            //Consultamos cada coche, será el segundo objeto del array
+            Clientes clientes = (Clientes) par[1];
 
-        System.out.println(clientes);
+            System.out.println(clientes);
+
+        } catch (NoSuchElementException n) {
+
+            System.out.println("No se han encontrado resultados");
+        }
 
     }
 
     /**
-     * 4.c-> Método que recupera el número de coches diferentes reservados a un
+     * 4.c  Método que recupera el número de coches diferentes reservados a un
      * cliente determinado
      *
      * @param idCliente
      */
-    public void consultaCochesCliente(int idCliente) {
+    public static void consultaCochesCliente(int idCliente) {
 
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
@@ -256,6 +324,7 @@ public class Consultas {
                 + " group by idCoche";
 
         Query query = sesion.createQuery(hql);
+        query.setParameter("idCliente", idCliente);
         int numeroCoches = (int) query.uniqueResult();
         System.out.println("El número de coches es " + numeroCoches);
 
@@ -267,7 +336,7 @@ public class Consultas {
      *
      * @param idCoche
      */
-    public void consultaNumeroReservasCoche(int idCoche) {
+    public static void consultaNumeroReservasCoche(int idCoche) {
 
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
@@ -277,6 +346,7 @@ public class Consultas {
                 + " and r.idCoche=:idCoche";
 
         Query query = sesion.createQuery(hql);
+        query.setParameter("idCoche", idCoche);
         int numero = (int) query.uniqueResult();
         System.out.println("El coche " + idCoche + " se ha reservado " + numero + " veces");
 
