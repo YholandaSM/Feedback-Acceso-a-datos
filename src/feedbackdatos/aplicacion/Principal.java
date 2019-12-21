@@ -18,14 +18,18 @@ public class Principal {
         
       
         
-       GestorCoches gestorCoches=new GestorCoches();
-       gestorCoches.altaCoche("20001Ñ", 8000, "Blanco", "Renault", new Date("2016/09/10"));
+      // GestorCoches gestorCoches=new GestorCoches();
+      //gestorCoches.altaCoche("2999T", 8000, "Burdeos", "Renault", new Date("2019/09/10"));
         
         
        // GestorClientes gClientes= new GestorClientes();
-       // gClientes.altaCliente("45620111A", "Marcelo", "Lópex", "Calle del Hueso", "356888112");
+      //  gClientes.altaCliente("000000X", "Anmastasia", "Lópex", "Calle del Hueso", "356888112");
+       
+       
+      // GestorReservas gr= new GestorReservas();
+      // gr.altaReservas(1, 1, new Date("2020/09/10"), new Date("2020/09/12"), 250, 50);
         
-        
+        GeneraXML.generarXml();
     }
     
 }

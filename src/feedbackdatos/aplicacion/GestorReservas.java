@@ -30,6 +30,8 @@ public class GestorReservas {
         if (Consultas.consultaExisteCliente(idCliente) && Consultas.consultaExisteCoche(idcoche)
                 && !Consultas.existeReserva(idcoche, fechaIni, fechaDevol)) {
 
+            System.out.println("Insertamos una fila en la tabla RESERVAS...");
+
             Reservas reserva = new Reservas();
             reserva.setIdReserva(new GetId().getIdReservas());
             reserva.setIdCliente(idCliente);
@@ -58,8 +60,6 @@ public class GestorReservas {
             System.out.println("No se puede dar de alta..");
 
         }
-
-        System.out.println("Insertamos una fila en la tabla RESERVAS...");
 
     }
 
