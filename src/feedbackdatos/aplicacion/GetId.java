@@ -42,5 +42,16 @@ public class GetId {
         return (int) (id + 1);
 
     }
+    
+    public int getIdReservas() {
+
+        Query query = sesion.createQuery("select coalesce(max(idReserva),1) from Reservas");
+
+        int id = (int) query.uniqueResult();
+
+        return (int) (id + 1);
+
+    }
+
 
 }
