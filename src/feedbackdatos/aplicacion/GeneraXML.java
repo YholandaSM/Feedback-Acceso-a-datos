@@ -16,8 +16,11 @@ import javax.xml.bind.Marshaller;
 public class GeneraXML {
 
     public static void generarXml() {
-
-        ArrayList<Reservas> lista = Consultas.getReservas();
+         
+        
+         ArrayList<Reservas> lista= new ArrayList<Reservas>();
+         
+         lista = Consultas.getReservas();
         ListaReservas reservas = new ListaReservas(lista );
         JAXBContext context;
         Marshaller m;
@@ -31,13 +34,15 @@ public class GeneraXML {
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
             //Visualizamos el XML
-            m.marshal(lista, System.out);
+            m.marshal(reservas, System.out);
 
             //Escribimos en el archivo
-            m.marshal(lista, new File("listaReservas.xml"));
+            m.marshal(reservas, new File("listaReservas.xml"));
 
         } catch (JAXBException ex) {
-            Logger.getLogger(GeneraXML.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            
+           
         }
 
     }

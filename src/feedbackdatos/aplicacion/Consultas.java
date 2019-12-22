@@ -316,14 +316,15 @@ public class Consultas {
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
 
-        String hql = "select count(idCoche) from Reservas r, Clientes c"
+        String hql = "select count(distinct r.idCoche) "
+                + " from Reservas r, Clientes c"
                 + " where r.idCliente=c.idCliente "
-                + " and r.idCliente=:idCliente"
-                + " group by idCoche";
+                + " and r.idCliente=:idCliente";
+                 
 
         Query query = sesion.createQuery(hql);
         query.setParameter("idCliente", idCliente);
-        int numeroCoches = (int) query.uniqueResult();
+        long numeroCoches = (long) query.uniqueResult();
         System.out.println("El número de coches es " + numeroCoches);
 
     }
@@ -339,13 +340,13 @@ public class Consultas {
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
 
-        String hql = "select count(idCoche) from Reservas r, Coches c"
+        String hql = "select count(r.idCoche) from Reservas r, Coches c"
                 + " where r.idCoche=c.idCoche "
                 + " and r.idCoche=:idCoche";
 
         Query query = sesion.createQuery(hql);
         query.setParameter("idCoche", idCoche);
-        int numero = (int) query.uniqueResult();
+        long numero = (long) query.uniqueResult();
         System.out.println("El coche " + idCoche + " se ha reservado " + numero + " veces");
 
     }

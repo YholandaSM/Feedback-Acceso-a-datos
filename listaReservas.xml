@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<listaReservas/>
+<alquileres>
+    <listaReservas>
+        <reserva>
+            <idReserva>0</idReserva>
+            <fechaInicio>2019-02-12T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2019-04-12T00:00:00+02:00</fechaDevolucion>
+            <precioTotal>500.15</precioTotal>
+            <litros>5.1</litros>
+            <idCliente>0</idCliente>
+            <idCoche>0</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>1</idReserva>
+            <fechaInicio>2020-01-01T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-10-10T00:00:00+02:00</fechaDevolucion>
+            <precioTotal>14.0</precioTotal>
+            <litros>5.0</litros>
+            <idCliente>4</idCliente>
+            <idCoche>4</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>2</idReserva>
+            <fechaInicio>2019-12-01T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2019-12-31T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>150.0</precioTotal>
+            <litros>9.0</litros>
+            <idCliente>4</idCliente>
+            <idCoche>4</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>3</idReserva>
+            <fechaInicio>2019-12-20T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-01-01T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>80.0</precioTotal>
+            <litros>9.0</litros>
+            <idCliente>5</idCliente>
+            <idCoche>4</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>4</idReserva>
+            <fechaInicio>2019-12-01T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-02-01T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>150.0</precioTotal>
+            <litros>5.0</litros>
+            <idCliente>4</idCliente>
+            <idCoche>10</idCoche>
+        </reserva>
+    </listaReservas>
+</alquileres>

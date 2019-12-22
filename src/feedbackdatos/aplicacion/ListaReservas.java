@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package feedbackdatos.aplicacion;
 
 import feedbackdatos.Reservas;
@@ -16,14 +11,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jose
  */
 
-@XmlRootElement()
+@XmlRootElement(name="alquileres")
 public class ListaReservas {
     
-    private ArrayList<Reservas> listaReserva;
+    private ArrayList<Reservas> listaReserva = new ArrayList();
   
     public ListaReservas(ArrayList<Reservas> listaReserva ){
-        
-        super();
+       
         this.listaReserva=listaReserva;
          
         
@@ -34,8 +28,8 @@ public class ListaReservas {
     public ListaReservas(){}
     
     
-    @XmlElementWrapper(name="listaReserva")
-    @XmlElement(name="Reserva")
+    @XmlElementWrapper(name="listaReservas")
+    @XmlElement(name="reserva")
     public ArrayList<Reservas> getListaReserva() {
         return listaReserva;
     }
