@@ -9,6 +9,7 @@ import feedbackdatos.Clientes;
 import feedbackdatos.Coches;
 import feedbackdatos.HibernateUtil;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +45,8 @@ public class GestorCoches {
 
             sesion.save(coche);
             trans.commit();
+            JOptionPane.showMessageDialog(null, "Se ha insertado el coche " + coche.getIdCoche()
+                    + "-Matrícula: " + coche.getMatricula());
         } catch (ConstraintViolationException c) {
             System.out.println("Coche duplicado");
 
@@ -70,6 +73,8 @@ public class GestorCoches {
             sesion.delete(coche);
             trans.commit();
             System.out.println("Coche eliminado: " + id);
+            JOptionPane.showMessageDialog(null, "Se ha eliminado el coche " + coche.getIdCoche()
+                    + "-Matrícula: " + coche.getMatricula());
         } catch (ObjectNotFoundException o) {
 
             System.out.println("Error: no existe el coche: " + id);
@@ -100,20 +105,23 @@ public class GestorCoches {
             System.out.printf("Precio anterior: %.2f%n", coche.getPrecio());
             System.out.printf("Color anterior: %s%n", coche.getColor());
             System.out.printf("Marca anterior: %s%n", coche.getMarca());
-            System.out.printf("Fecha anterior: %d%n", coche.getFechaMatriculacion());
+            System.out.println("Fecha anterior: " + coche.getFechaMatriculacion());
 
             coche.setPrecio(precio);
             coche.setColor(color);
             coche.setMarca(marca);
             coche.setFechaMatriculacion(fecha);
 
-            sesion.update(id);
+            sesion.update(coche);
             trans.commit();
 
             System.out.printf("Precio nuevo: %.2f%n", coche.getPrecio());
             System.out.printf("Color nuevo: %s%n", coche.getColor());
             System.out.printf("Marca nuevo: %s%n", coche.getMarca());
-            System.out.printf("Fecha nuevo: %d%n", coche.getFechaMatriculacion());
+            System.out.println("Fecha nuevo: " + coche.getFechaMatriculacion());
+
+            JOptionPane.showMessageDialog(null, "Se ha modificado el coche " + coche.getIdCoche()
+                    + "-Matrícula: " + coche.getMatricula());
 
         } catch (ObjectNotFoundException o) {
 

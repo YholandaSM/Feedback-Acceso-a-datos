@@ -67,6 +67,11 @@ public class Coches  implements java.io.Serializable {
     public String getMarca() {
         return this.marca;
     }
+
+    @Override
+    public String toString() {
+        return "Coches{" + "idCoche=" + idCoche + ", matricula=" + matricula + ", precio=" + precio + ", color=" + color + ", marca=" + marca + ", fechaMatriculacion=" + fechaMatriculacion + '}';
+    }
     
     public void setMarca(String marca) {
         this.marca = marca;

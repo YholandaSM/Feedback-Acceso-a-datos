@@ -30,23 +30,24 @@ public class Principal {
 
                     GestorCoches gestorCoches = new GestorCoches();
                     String matricula = JOptionPane.showInputDialog("Matrícula");
-                    float precio = Float.parseFloat(JOptionPane.showInputDialog("Precio"));
+                    float precio = Float.parseFloat(JOptionPane.showInputDialog("Precio (0000,00)"));
                     String color = JOptionPane.showInputDialog("color");
                     String marca = JOptionPane.showInputDialog("marca");
-                    Date fecha = ParseFecha(JOptionPane.showInputDialog("fecha"));
+                    Date fecha = ParseFecha(JOptionPane.showInputDialog("Fecha (dd/mm/aaaa)"));
                     gestorCoches.altaCoche(matricula, precio, color, marca, fecha);
 
                     break;
                 case 2://Baja coche
 
                     GestorCoches gestorCoches1 = new GestorCoches();
-                    int idCoche = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche"));
+                    int idCoche = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche a eliminar"
+                            + ""));
                     gestorCoches1.bajaCoche(idCoche);
 
                     break;
                 case 3://Modificar coche
                     GestorCoches gestorCoches3 = new GestorCoches();
-                    int idCoche1 = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche"));
+                    int idCoche1 = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche a modificar"));
                     float precio1 = Float.parseFloat(JOptionPane.showInputDialog("Precio"));
                     String color1 = JOptionPane.showInputDialog("color");
                     String marca1 = JOptionPane.showInputDialog("marca");

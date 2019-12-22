@@ -3,6 +3,7 @@ package feedbackdatos.aplicacion;
 import feedbackdatos.HibernateUtil;
 import feedbackdatos.Reservas;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -45,6 +46,8 @@ public class GestorReservas {
 
                 sesion.save(reserva);
                 trans.commit();
+                JOptionPane.showMessageDialog(null, "Insertada una reserva con id "+reserva.getIdReserva());
+
             } catch (ConstraintViolationException c) {
                 System.out.println("Reserva duplicada");
 

@@ -230,7 +230,6 @@ public class Consultas {
 
         }
 
-        query = sesion.createQuery(hql);
         List<Coches> lista = query.list();
 
         for (Coches c : lista) {
@@ -245,7 +244,7 @@ public class Consultas {
      * *******************APARTADO 4**************************
      */
     /**
-     * 4.a  Método que ofrece un listado de matrículas y números de reserva de
+     * 4.a Método que ofrece un listado de matrículas y números de reserva de
      * los coches que están reservados hoy.
      *
      */
@@ -255,7 +254,7 @@ public class Consultas {
         Session sesion = factoria.openSession();
 
         String hql = " from Reservas r, Coches c where now() between r.fechaInicio and "
-                + " r.fechaDevolucion and r.idCoche=c.IdCoche order by c.matricula";
+                + " r.fechaDevolucion and r.idCoche=c.idCoche order by c.matricula";
 
         Query query = sesion.createQuery(hql);
 
@@ -276,9 +275,8 @@ public class Consultas {
     }
 
     /**
-     * 4.b  Método que recupera la lista de los clientes con reservas
-     * pendientes (aquéllas en las que la fecha de inicio es posterior a la
-     * fecha de hoy)
+     * 4.b Método que recupera la lista de los clientes con reservas pendientes
+     * (aquéllas en las que la fecha de inicio es posterior a la fecha de hoy)
      */
     public static void consultaReservasPendientes() {
 
@@ -308,7 +306,7 @@ public class Consultas {
     }
 
     /**
-     * 4.c  Método que recupera el número de coches diferentes reservados a un
+     * 4.c Método que recupera el número de coches diferentes reservados a un
      * cliente determinado
      *
      * @param idCliente

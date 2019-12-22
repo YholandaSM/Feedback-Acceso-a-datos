@@ -2,6 +2,7 @@ package feedbackdatos.aplicacion;
 
 import feedbackdatos.Clientes;
 import feedbackdatos.HibernateUtil;
+import javax.swing.JOptionPane;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +45,8 @@ public class GestorClientes {
 
             sesion.save(cliente);
             trans.commit();
+            JOptionPane.showMessageDialog(null, "Se ha insertado el cliente " + cliente.getNombre()
+                    + " " + cliente.getApellidos());
         } catch (ConstraintViolationException c) {
             System.out.println("Coche duplicado");
 
@@ -73,6 +76,8 @@ public class GestorClientes {
         try {
             sesion.delete(cliente);
             trans.commit();
+            JOptionPane.showMessageDialog(null, "Se ha eliminado el cliente " + cliente.getNombre()
+                    + " " + cliente.getApellidos());
             System.out.println("Cliente eliminado: " + id);
         } catch (ObjectNotFoundException o) {
 
@@ -106,20 +111,24 @@ public class GestorClientes {
             //Recuperamos el cliente que vamos a modificar
             Clientes cliente = (Clientes) sesion.load(Clientes.class, id);
             System.out.printf("Modificamos el cliente: %d%n", cliente.getIdCliente());
-            System.out.printf("Dirección anterior: %s%n", cliente.getDireccion());
-            System.out.printf("Teléfono anterior: %s%n", cliente.getTelefono());
+            System.out.println("Dirección anterior:  "+cliente.getDireccion());
+            System.out.println("Teléfono anterior:  "+cliente.getTelefono());
 
             cliente.setDireccion(direccion);
             cliente.setTelefono(telefono);
 
-            sesion.update(id);
+            sesion.update(cliente);
             trans.commit();
+             JOptionPane.showMessageDialog(null, "Se ha modificado el cliente con id "+
+                     cliente.getIdCliente() +" "+ cliente.getNombre()
+                    + " " + cliente.getApellidos());
             System.out.printf("Dirección nueva: %s%n", cliente.getDireccion());
             System.out.printf("Teléfono nuevo: %s%n", cliente.getTelefono());
 
         } catch (ObjectNotFoundException o) {
 
             System.out.println("Error: no existe el cliente: " + id);
+            JOptionPane.showMessageDialog(null," No existe el cliente: " + id );
 
         } catch (Exception e) {
 
