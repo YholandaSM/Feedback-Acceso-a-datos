@@ -10,13 +10,13 @@ import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
- *
+ * Clase para gestionar clientes
  * @author Yolanda
  */
 public class GestorClientes {
 
     /**
-     *
+     * 
      * @param dni
      * @param nombre
      * @param apellidos

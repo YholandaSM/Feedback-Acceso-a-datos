@@ -46,5 +46,14 @@
             <idCliente>4</idCliente>
             <idCoche>10</idCoche>
         </reserva>
+        <reserva>
+            <idReserva>5</idReserva>
+            <fechaInicio>2020-02-01T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-03-02T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>0.0</precioTotal>
+            <litros>0.0</litros>
+            <idCliente>4</idCliente>
+            <idCoche>7</idCoche>
+        </reserva>
     </listaReservas>
 </alquileres>

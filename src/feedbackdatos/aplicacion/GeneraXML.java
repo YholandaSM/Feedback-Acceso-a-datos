@@ -3,18 +3,21 @@ package feedbackdatos.aplicacion;
 import feedbackdatos.Reservas;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 /**
- *
- * @author Jose
+ * Clase  que genera un fichero XML
+ * @author Yolanda
  */
 public class GeneraXML {
-
+    
+    
+    /**
+     * Método que genera un fichero XML con los datos de la tabla Reservas
+     */
     public static void generarXml() {
          
         

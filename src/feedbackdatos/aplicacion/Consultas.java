@@ -14,6 +14,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+
+/**
+ * Clase con consultas sobre la BBDD
+ * @author Jose
+ */
 public class Consultas {
 
     /**
