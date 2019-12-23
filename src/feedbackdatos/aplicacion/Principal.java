@@ -19,76 +19,80 @@ public class Principal {
 
     public static void main(String[] args) {
         int opcion = 0;
+        try {
+            do {
+                mostrarMenu();
+                opcion = Integer.parseInt(JOptionPane.showInputDialog("Escribe una opción"));
 
-        do {
-            mostrarMenu();
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("Escribe una opción"));
+                switch (opcion) {
 
-            switch (opcion) {
+                    case 1://Alta coche
+                        insertarCoche();
+                        break;
 
-                case 1://Alta coche
-                    insertarCoche();
-                    break;
+                    case 2://Baja coche
+                        eliminarCoche();
+                        break;
 
-                case 2://Baja coche
-                    eliminarCoche();
-                    break;
+                    case 3://Modificar coche
+                        updateCoche();
+                        break;
 
-                case 3://Modificar coche
-                    updateCoche();
-                    break;
+                    case 4://Alta clientes
+                        insertarCliente();
+                        break;
 
-                case 4://Alta clientes
-                    insertarCliente();
-                    break;
+                    case 5://Baja cliente
+                        eliminarCliente();
+                        break;
 
-                case 5://Baja cliente
-                    eliminarCliente();
-                    break;
+                    case 6:// Modificar cliente
+                        updateCliente();
+                        break;
+                    case 7://Alta reservas
+                        insertarReserva();
+                        break;
 
-                case 6:// Modificar cliente
-                    updateCliente();
-                    break;
-                case 7://Alta reservas
-                    insertarReserva();
-                    break;
+                    case 8://Consulta clientes
+                        consultaClientes();
+                        break;
 
-                case 8://Consulta clientes
-                    consultaClientes();
-                    break;
+                    case 9://Consulta coches
+                        consultaCoches();
+                        break;
 
-                case 9://Consulta coches
-                    consultaCoches();
-                    break;
+                    case 10://Lista de reservas hoy
+                        Consultas.listadoReservasHoy();
 
-                case 10://Lista de reservas hoy
-                    Consultas.listadoReservasHoy();
+                        break;
+                    case 11://Clientes con reservas pendientes
+                        Consultas.consultaReservasPendientes();
+                        break;
 
-                    break;
-                case 11://Clientes con reservas pendientes
-                    Consultas.consultaReservasPendientes();
+                    case 12://Coches reservados a un cliente determinado
+                        getCochesCliente();
+                        break;
 
-                    break;
-                case 12://Coches reservados a un cliente determinado
-                    int idCliente3 = Integer.parseInt(JOptionPane.showInputDialog("Id. del cliente"));
-                    Consultas.consultaCochesCliente(idCliente3);
+                    case 13://Veces que se ha reservado un coche
+                        getNumeroVecesCocheReservado();
+                        break;
 
-                    break;
-                case 13://Veces que se ha reservado un coche
-                    int idCoche3 = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche"));
-                    Consultas.consultaNumeroReservasCoche(idCoche3);
+                    case 14://Generar fichero reservas.xml
+                        GeneraXML.generarXml();
 
-                    break;
-                case 14://Generar fichero reservas.xml
-                    GeneraXML.generarXml();
+                        break;
+                    case 15:
+                        System.exit(0);
+                        break;
+                }
 
-                    break;
-                case 15:
-                    System.exit(0);
-                    break;
-            }
+            } while (opcion != 15);
 
-        } while (opcion != 15);
+        } catch (NumberFormatException n) {
+
+            System.out.println("Debe intorducir un nº válido");
+            System.out.println("Error: " + n.toString());
+        }
 
     }
 
@@ -137,13 +141,14 @@ public class Principal {
         System.out.println("15->Salir");
 
     }
-    
-    
+
     /**
-     * Opción 1 del menú: valida los datos introducidos y si todo es correcto,
-     * inserta un coche en BBDD
+     * Opción 1 del menú: valida los datos introducidos por el usuario y si todo
+     * es correcto, inserta un coche en BBDD
+     *
+     * @throws NumberFormatException
      */
-    public static void insertarCoche() {
+    public static void insertarCoche() throws NumberFormatException {
 
         GestorCoches gestorCoches = new GestorCoches();
         float fPrecio = 0;
@@ -153,84 +158,136 @@ public class Principal {
         boolean validarFecha = true;
 
         //1.Comprobamos que se introducen los parámetros obligatoriso
-        try {
-            do {
-                //MATRÍCULA
-                matricula = JOptionPane.showInputDialog("Matrícula (obligatorio)");
+        do {
+            //MATRÍCULA
+            matricula = JOptionPane.showInputDialog("Matrícula (obligatorio)");
 
-                if (matricula.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir la matrícula",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarMatricula = false;
+            if (matricula.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir la matrícula",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarMatricula = false;
 
-                } else {
+            } else {
 
-                    validarMatricula = true;
-                }
-
-            } while (!validarMatricula);
-
-            do {
-                //FECHA
-                String fecha = JOptionPane.showInputDialog("Fecha (obligatorio)");
-                if (fecha.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir la fecha de matriculación",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarFecha = false;
-
-                } else {
-                    dFecha = ParseFecha(fecha);
-                    validarFecha = true;
-                }
-
-            } while (!validarFecha);
-
-            //2.Introducimos los parámetros que no son obligatorios        
-            String precio = JOptionPane.showInputDialog("Precio (0000,00)");
-            if (!precio.equals("")) {
-                fPrecio = Float.parseFloat(precio);
+                validarMatricula = true;
             }
 
-            String color = JOptionPane.showInputDialog("color");
-            String marca = JOptionPane.showInputDialog("marca");
+        } while (!validarMatricula);
 
-            //4. Y damos de alta
-            gestorCoches.altaCoche(matricula, fPrecio, color, marca, dFecha);
+        do {
+            //FECHA
+            String fecha = JOptionPane.showInputDialog("Fecha (obligatorio)");
+            if (fecha.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir la fecha de matriculación",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarFecha = false;
 
-        } catch (NumberFormatException n) {
+            } else {
+                dFecha = ParseFecha(fecha);
+                validarFecha = true;
+            }
 
-            System.out.println("Debes introducir un precio válido");
-        } catch (Exception e) {
+        } while (!validarFecha);
 
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        //2.Introducimos los parámetros que no son obligatorios        
+        String precio = JOptionPane.showInputDialog("Precio (0000,00)");
+        if (!precio.equals("")) {
+            fPrecio = Float.parseFloat(precio);
         }
 
+        String color = JOptionPane.showInputDialog("color");
+        String marca = JOptionPane.showInputDialog("marca");
+
+        //4. Y damos de alta
+        gestorCoches.altaCoche(matricula, fPrecio, color, marca, dFecha);
+
     }
+
     /**
-     * Opción 2 del menú principal. 
+     * Opción 2 del menú principal. Comprueba si el usuario ha introducido el id
+     * del coche, y si es así lo elimina de la BBDD
+     *
+     * @throws NumberFormatException
      */
-    public static void eliminarCoche() {
+    public static void eliminarCoche() throws NumberFormatException {
+        String idCoche = "";
+        int iIdCoche = 0;
+        boolean validarIdCoche = true;
+        GestorCoches gestorCoches = new GestorCoches();
 
-        GestorCoches gestorCoches1 = new GestorCoches();
-        int idCoche = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche a eliminar"
-                + ""));
-        gestorCoches1.bajaCoche(idCoche);
+        do {
+            //ID DEL COCHE
+            idCoche = JOptionPane.showInputDialog("Id del coche a eliminar(obligatorio)");
+            if (idCoche.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del coche",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCoche = false;
+
+            } else {
+                iIdCoche = Integer.parseInt(idCoche);
+                validarIdCoche = true;
+            }
+
+        } while (!validarIdCoche);
+        gestorCoches.bajaCoche(iIdCoche);
 
     }
 
-    public static void updateCoche() {
+    /**
+     * Opción 3 del menú. Comprueba los datos que introduce el usuario y si son
+     * correctos modifica el coche.
+     *
+     * @throws NumberFormatException
+     */
+    public static void updateCoche() throws NumberFormatException {
+        float fPrecio = 0;
+        String precio = "";
+        String fecha = "";
+        Date dFecha = null;
+        boolean validarIdCoche = true;
+        GestorCoches gestorCoches = new GestorCoches();
+        String idCoche = "";
+        int iIdCoche = 0;
 
-        GestorCoches gestorCoches3 = new GestorCoches();
-        int idCoche1 = Integer.parseInt(JOptionPane.showInputDialog("Id. del coche a modificar"));
-        float precio1 = Float.parseFloat(JOptionPane.showInputDialog("Precio"));
-        String color1 = JOptionPane.showInputDialog("color");
-        String marca1 = JOptionPane.showInputDialog("marca");
-        Date fecha1 = ParseFecha(JOptionPane.showInputDialog("fecha"));
-        gestorCoches3.modificarCoche(idCoche1, precio1, color1, marca1, fecha1);
+        //Validamos el id
+        do {
+            //ID DEL COCHE
+            idCoche = JOptionPane.showInputDialog("Id del coche a modificar(obligatorio)");
+
+            if (idCoche.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del coche",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCoche = false;
+
+            } else {
+                iIdCoche = Integer.parseInt(idCoche);
+                validarIdCoche = true;
+            }
+
+        } while (!validarIdCoche);
+        //Formateamos el campo precio si viene informado, sino se deja a 0.
+        precio = JOptionPane.showInputDialog("Precio");
+        if (!precio.equals("")) {
+            fPrecio = Float.parseFloat(JOptionPane.showInputDialog("Precio"));
+        }
+
+        String color = JOptionPane.showInputDialog("color");
+        String marca = JOptionPane.showInputDialog("marca");
+        fecha = JOptionPane.showInputDialog("fecha");
+        if (!fecha.equals("")) {
+            dFecha = ParseFecha(fecha);
+        }
+
+        gestorCoches.modificarCoche(iIdCoche, fPrecio, color, marca, dFecha);
     }
 
-    public static void insertarCliente() {
+    /**
+     * Opción 4 del menú: comprueba que los datos introducidos por el usuario
+     * sean correctos y, si es así, inserta un nuevo cliente en BBDD
+     *
+     * @throws NumberFormatException
+     */
+    public static void insertarCliente() throws NumberFormatException {
 
         GestorClientes gestorClientes = new GestorClientes();
         float fPrecio = 0;
@@ -240,74 +297,119 @@ public class Principal {
         boolean validarNombre = true;
 
         //1.Comprobamos que se introducen los parámetros obligatoriso
-        try {
-            do {
-                //dni
-                dni = JOptionPane.showInputDialog("DNI (obligatorio)");
+        do {
+            //dni
+            dni = JOptionPane.showInputDialog("DNI (obligatorio)");
 
-                if (dni.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir el DNI",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarDni = false;
+            if (dni.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el DNI",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarDni = false;
 
-                } else {
+            } else {
 
-                    validarDni = true;
-                }
+                validarDni = true;
+            }
 
-            } while (!validarDni);
+        } while (!validarDni);
 
-            do {
-                //Nombre
-                nombre = JOptionPane.showInputDialog("Nombre (obligatorio)");
-                if (nombre.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir el nombre",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarNombre = false;
+        do {
+            //Nombre
+            nombre = JOptionPane.showInputDialog("Nombre (obligatorio)");
+            if (nombre.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el nombre",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarNombre = false;
 
-                } else {
+            } else {
 
-                    validarNombre = true;
-                }
+                validarNombre = true;
+            }
 
-            } while (!validarNombre);
+        } while (!validarNombre);
 
-            //2.Introducimos los parámetros que no son obligatorios        
-            String apellidos = JOptionPane.showInputDialog("Apellidos  ");
-            String direccion = JOptionPane.showInputDialog("Dirección");
-            String telefono = JOptionPane.showInputDialog("Teléfono");
+        //2.Introducimos los parámetros que no son obligatorios        
+        String apellidos = JOptionPane.showInputDialog("Apellidos  ");
+        String direccion = JOptionPane.showInputDialog("Dirección");
+        String telefono = JOptionPane.showInputDialog("Teléfono");
 
-            //4. Y damos de alta
-            gestorClientes.altaCliente(dni, nombre, apellidos, direccion, telefono);
-
-        } catch (NumberFormatException n) {
-
-            System.out.println("Debes introducir un precio válido");
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        //4. Y damos de alta
+        gestorClientes.altaCliente(dni, nombre, apellidos, direccion, telefono);
 
     }
 
-    public static void eliminarCliente() {
+    /**
+     * Opción 5 del menú: valida que el usuario haya introducido el id del
+     * cliente correctamente y lo elimina de la BBDD.
+     *
+     * @throws NumberFormatException
+     */
+    public static void eliminarCliente() throws NumberFormatException {
 
-        GestorClientes gestorClientes1 = new GestorClientes();
-        int idCliente = Integer.parseInt(JOptionPane.showInputDialog("Id. del cliente a elimiar"));
-        gestorClientes1.bajaCliente(idCliente);
+        GestorClientes gestorClientes = new GestorClientes();
+        String idCliente = "";
+        int iIdCliente = 0;
+        boolean validatIdCliente = true;
+
+        do {
+            //ID DEL CLIENTE
+            idCliente = JOptionPane.showInputDialog("Id del cliente a eliminar(obligatorio)");
+            if (idCliente.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del "
+                        + "cliente a eliminar",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validatIdCliente = false;
+
+            } else {
+                iIdCliente = Integer.parseInt(idCliente);
+                validatIdCliente = true;
+            }
+
+        } while (!validatIdCliente);
+        gestorClientes.bajaCliente(iIdCliente);
     }
 
-    public static void updateCliente() {
+    /**
+     * Opción 6 del menú: comprueba que el usuario haya introducido el id del
+     * cliente y lo modifica en la BBDD con los datos del usuario
+     *
+     * @throws NumberFormatException
+     */
+    public static void updateCliente() throws NumberFormatException {
 
-        GestorClientes gestorClientes2 = new GestorClientes();
-        int idCliente1 = Integer.parseInt(JOptionPane.showInputDialog("Id. del cliente a modificar"));
+        GestorClientes gestorClientes = new GestorClientes();
+
+        String idCliente = "";
+        int iIdCliente = 0;
+        boolean validatIdCliente = true;
+
+        do {
+            //ID DEL CLIENTE
+            idCliente = JOptionPane.showInputDialog("Id del cliente a modificar(obligatorio)");
+            if (idCliente.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del "
+                        + "cliente a nodificar",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validatIdCliente = false;
+
+            } else {
+                iIdCliente = Integer.parseInt(idCliente);
+                validatIdCliente = true;
+            }
+
+        } while (!validatIdCliente);
         String direccion1 = JOptionPane.showInputDialog("Dirección");
         String tel1 = JOptionPane.showInputDialog("Teléfono");
-        gestorClientes2.modificarCliente(idCliente1, direccion1, tel1);
+        gestorClientes.modificarCliente(iIdCliente, direccion1, tel1);
     }
 
-    public static void insertarReserva() {
+    /**
+     * Opción 7 del menú: comprueba que el usuario haya introducido los datos
+     * correctos e inserta una reserva en BBDD.
+     *
+     * @throws NumberFormatException
+     */
+    public static void insertarReserva() throws NumberFormatException {
 
         GestorReservas gestorReservas = new GestorReservas();
         float fPrecio = 0;
@@ -325,95 +427,89 @@ public class Principal {
         boolean validarFechaDevolucion = true;
 
         //1.Comprobamos que se introducen los parámetros obligatoriso
-        try {
-            do {
-                //ID DEL CLIENTE
-                idCliente = JOptionPane.showInputDialog("Id del cliente (obligatorio)");
+        do {
+            //ID DEL CLIENTE
+            idCliente = JOptionPane.showInputDialog("Id del cliente (obligatorio)");
 
-                if (idCliente.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir el id del cliente",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarIdCliente = false;
+            if (idCliente.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el id del cliente",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCliente = false;
 
-                } else {
-                    iIdCliente = Integer.parseInt(idCliente);
-                    validarIdCliente = true;
-                }
-
-            } while (!validarIdCliente);
-
-            do {
-                //ID DEL COCHE
-                idCoche = JOptionPane.showInputDialog("Id del coche (obligatorio)");
-                if (idCoche.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir el Id del coche",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarIdCoche = false;
-
-                } else {
-                    iIdCoche = Integer.parseInt(idCoche);
-                    validarIdCoche = true;
-                }
-
-            } while (!validarIdCoche);
-
-            do {
-                //FECHA INICIO
-                String fechaInicio = JOptionPane.showInputDialog("Fecha inicio(obligatorio)");
-                if (fechaInicio.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir la fecha de inicio",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarFechaInicio = false;
-
-                } else {
-                    dFechaInicio = ParseFecha(fechaInicio);
-                    validarFechaInicio = true;
-                }
-
-            } while (!validarFechaInicio);
-
-            do {
-                //FECHA DEVOLUCION
-                String fechaDevolucion = JOptionPane.showInputDialog("Fecha de devolucion(obligatorio)");
-                if (fechaDevolucion.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir la fecha de devolucion",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
-                    validarFechaDevolucion = false;
-
-                } else {
-                    dFechaDevolucion = ParseFecha(fechaDevolucion);
-                    validarFechaDevolucion = true;
-                }
-
-            } while (!validarFechaDevolucion);
-
-            //2.Introducimos los parámetros que no son obligatorios 
-            String precioReserva = JOptionPane.showInputDialog("Precio");
-
-            if (!precioReserva.equals("")) {
-                fPrecioReserva = Float.parseFloat(precioReserva);
+            } else {
+                iIdCliente = Integer.parseInt(idCliente);
+                validarIdCliente = true;
             }
 
-            String litros = JOptionPane.showInputDialog("Litros");
-            if (!litros.equals("")) {
-                fLitros = Float.parseFloat(litros);
+        } while (!validarIdCliente);
+
+        do {
+            //ID DEL COCHE
+            idCoche = JOptionPane.showInputDialog("Id del coche (obligatorio)");
+            if (idCoche.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del coche",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCoche = false;
+
+            } else {
+                iIdCoche = Integer.parseInt(idCoche);
+                validarIdCoche = true;
             }
 
-            //4. Y damos de alta
-            gestorReservas.altaReservas(iIdCliente, iIdCoche, dFechaInicio,
-                    dFechaDevolucion, fPrecioReserva, fLitros);
+        } while (!validarIdCoche);
 
-        } catch (NumberFormatException n) {
+        do {
+            //FECHA INICIO
+            String fechaInicio = JOptionPane.showInputDialog("Fecha inicio(obligatorio)");
+            if (fechaInicio.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir la fecha de inicio",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarFechaInicio = false;
 
-            System.out.println("Debes introducir un número válido");
-        } catch (Exception e) {
+            } else {
+                dFechaInicio = ParseFecha(fechaInicio);
+                validarFechaInicio = true;
+            }
 
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        } while (!validarFechaInicio);
+
+        do {
+            //FECHA DEVOLUCION
+            String fechaDevolucion = JOptionPane.showInputDialog("Fecha de devolucion(obligatorio)");
+            if (fechaDevolucion.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir la fecha de devolucion",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarFechaDevolucion = false;
+
+            } else {
+                dFechaDevolucion = ParseFecha(fechaDevolucion);
+                validarFechaDevolucion = true;
+            }
+
+        } while (!validarFechaDevolucion);
+
+        //2.Introducimos los parámetros que no son obligatorios 
+        String precioReserva = JOptionPane.showInputDialog("Precio");
+
+        if (!precioReserva.equals("")) {
+            fPrecioReserva = Float.parseFloat(precioReserva);
         }
+
+        String litros = JOptionPane.showInputDialog("Litros");
+        if (!litros.equals("")) {
+            fLitros = Float.parseFloat(litros);
+        }
+
+        //4. Y damos de alta
+        gestorReservas.altaReservas(iIdCliente, iIdCoche, dFechaInicio,
+                dFechaDevolucion, fPrecioReserva, fLitros);
 
     }
 
+    /**
+     * Opción 8 del menú: método que permite consultar clientes por nombre o
+     * apellidos.
+     */
     public static void consultaClientes() {
 
         Consultas consultas = new Consultas();
@@ -423,6 +519,10 @@ public class Principal {
 
     }
 
+    /**
+     * Opción 9 del menú: método que permite consultar coches por matrícula o
+     * marca.
+     */
     public static void consultaCoches() {
 
         Consultas consultas1 = new Consultas();
@@ -431,4 +531,65 @@ public class Principal {
         consultas1.consultaCoches(matricula1, marca2);
     }
 
+    /**
+     * Opción 12 del menú: muestra el número de coches reservados a un cliente
+     * determinado.
+     *
+     * @throws NumberFormatException
+     */
+    public static void getCochesCliente() throws NumberFormatException {
+        boolean validarIdCliente = true;
+        String idCliente = "";
+        int iIdCliente = 0;
+        //int id//Cliente3 = Integer.parseInt(JOptionPane.showInputDialog("Id. del cliente"));
+
+        do {
+            //ID DEL CLIENTE
+            idCliente = JOptionPane.showInputDialog("Id del cliente (obligatorio)");
+
+            if (idCliente.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el id del cliente",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCliente = false;
+
+            } else {
+                iIdCliente = Integer.parseInt(idCliente);
+                validarIdCliente = true;
+            }
+
+        } while (!validarIdCliente);
+
+        Consultas.consultaCochesCliente(iIdCliente);
+
+    }
+
+    /**
+     * Opción 13 del menú: muestra el número de veces que se ha reservado un
+     * coche determinado
+     *
+     * @throws NumberFormatException
+     */
+    public static void getNumeroVecesCocheReservado() throws NumberFormatException {
+        boolean validarIdCoche = true;
+        String idCoche = "";
+        int iIdCoche = 0;
+
+        do {
+            //ID DEL COCHE
+            idCoche = JOptionPane.showInputDialog("Id del coche (obligatorio)");
+            if (idCoche.equals("")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir el Id del coche",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+                validarIdCoche = false;
+
+            } else {
+                iIdCoche = Integer.parseInt(idCoche);
+                validarIdCoche = true;
+            }
+
+        } while (!validarIdCoche);
+
+        Consultas.consultaNumeroReservasCoche(iIdCoche);
+
+    }
 }

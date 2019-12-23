@@ -55,5 +55,41 @@
             <idCliente>4</idCliente>
             <idCoche>7</idCoche>
         </reserva>
+        <reserva>
+            <idReserva>6</idReserva>
+            <fechaInicio>2020-02-01T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-03-10T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>0.0</precioTotal>
+            <litros>0.0</litros>
+            <idCliente>10</idCliente>
+            <idCoche>12</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>7</idReserva>
+            <fechaInicio>2019-12-20T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-01-01T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>0.0</precioTotal>
+            <litros>0.0</litros>
+            <idCliente>8</idCliente>
+            <idCoche>11</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>8</idReserva>
+            <fechaInicio>2020-02-10T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-02-15T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>0.0</precioTotal>
+            <litros>0.0</litros>
+            <idCliente>4</idCliente>
+            <idCoche>11</idCoche>
+        </reserva>
+        <reserva>
+            <idReserva>9</idReserva>
+            <fechaInicio>2020-02-25T00:00:00+01:00</fechaInicio>
+            <fechaDevolucion>2020-03-25T00:00:00+01:00</fechaDevolucion>
+            <precioTotal>150.0</precioTotal>
+            <litros>9.0</litros>
+            <idCliente>9</idCliente>
+            <idCoche>14</idCoche>
+        </reserva>
     </listaReservas>
 </alquileres>

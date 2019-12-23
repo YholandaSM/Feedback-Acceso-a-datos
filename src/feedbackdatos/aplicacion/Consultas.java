@@ -14,9 +14,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
 /**
  * Clase con consultas sobre la BBDD
+ *
  * @author Jose
  */
 public class Consultas {
@@ -259,12 +259,14 @@ public class Consultas {
         Session sesion = factoria.openSession();
 
         String hql = " from Reservas r, Coches c where now() between r.fechaInicio and "
-                + " r.fechaDevolucion and r.idCoche=c.idCoche order by c.matricula";
+                + " r.fechaDevolucion and r.idCoche=c.idCoche order by r.idReserva";
 
         Query query = sesion.createQuery(hql);
 
         Iterator q = query.iterate();
-
+        System.out.println("//////////////////////////////////////////////////////////");
+        System.out.println("////////////////////RESERVAS HOY///////////////////////////");
+        System.out.println("//////////////////////////////////////////////////////////");
         while (q.hasNext()) {
 
             Object par[] = (Object[]) q.next();
@@ -273,8 +275,9 @@ public class Consultas {
             //Consultamos cada coche, será el segundo objeto del array
             Coches coche = (Coches) par[1];
 
-            System.out.println("Número de reserva " + reserva.getIdReserva() + " matrícula "
-                    + coche.getMatricula());
+            System.out.println("Nº DE RESERVA " + reserva.getIdReserva() + " ,MATRÍCULA "
+                    + coche.getMatricula() + " ,FECHAS: " + reserva.getFechaInicio() + " - "
+                    + reserva.getFechaDevolucion());
         }
 
     }
@@ -289,20 +292,25 @@ public class Consultas {
         Session sesion = factoria.openSession();
 
         String hql = " from Reservas r, Clientes c where r.fechaInicio > now()"
-                + " and r.idCliente= c.idCliente";
+                + " and r.idCliente= c.idCliente order by r.idReserva";
         try {
 
             Query query = sesion.createQuery(hql);
             Iterator q = query.iterate();
+            System.out.println("//////////////////////////////////////////////////////////");
+            System.out.println("///////////CLIENTES CON RESERVAS PENDIENTES///////////////////////");
+            System.out.println("//////////////////////////////////////////////////////////");
+            while (q.hasNext()) {
+                Object par[] = (Object[]) q.next();
+                //Consultamos cada reserva, será el primer objeto del array
+                Reservas reserva = (Reservas) par[0];
+                //Consultamos cada coche, será el segundo objeto del array
+                Clientes cliente = (Clientes) par[1];
 
-            Object par[] = (Object[]) q.next();
-            //Consultamos cada reserva, será el primer objeto del array
-            Reservas reserva = (Reservas) par[0];
-            //Consultamos cada coche, será el segundo objeto del array
-            Clientes clientes = (Clientes) par[1];
-
-            System.out.println(clientes);
-
+                System.out.println("Cliente :" + cliente.getNombre() + " " + cliente.getApellidos()
+                        + " ,reserva nº" + reserva.getIdReserva() + ". Fechas:" + reserva.getFechaInicio()
+                        + "--" + reserva.getFechaDevolucion());
+            }
         } catch (NoSuchElementException n) {
 
             System.out.println("No se han encontrado resultados");
@@ -321,16 +329,14 @@ public class Consultas {
         SessionFactory factoria = HibernateUtil.getSessionFactory();
         Session sesion = factoria.openSession();
 
-        String hql = "select count(distinct r.idCoche) "
-                + " from Reservas r, Clientes c"
-                + " where r.idCliente=c.idCliente "
-                + " and r.idCliente=:idCliente";
-                 
+        String hql = "select count(distinct idCoche) "
+                + " from Reservas "
+                + " where idCliente=:idCliente";
 
         Query query = sesion.createQuery(hql);
         query.setParameter("idCliente", idCliente);
         long numeroCoches = (long) query.uniqueResult();
-        System.out.println("El número de coches es " + numeroCoches);
+        System.out.println("El cliente "+idCliente+" ha reservado "+numeroCoches +" coches.");
 
     }
 

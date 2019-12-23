@@ -49,7 +49,8 @@ public class GestorCoches {
                     + "-Matrícula: " + coche.getMatricula());
         } catch (ConstraintViolationException c) {
             System.out.println("Coche duplicado");
-
+        } catch (Exception e) {
+            System.out.println("No se ha podido dar de alta..." +e.getMessage());
         } finally {
 
             sesion.close();
@@ -110,7 +111,7 @@ public class GestorCoches {
             coche.setPrecio(precio);
             coche.setColor(color);
             coche.setMarca(marca);
-            coche.setFechaMatriculacion(fecha);
+            if(!fecha.equals("") || fecha!=null) coche.setFechaMatriculacion(fecha);
 
             sesion.update(coche);
             trans.commit();
