@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package feedbackdatos.aplicacion;
 
 import feedbackdatos.Clientes;
@@ -14,14 +9,24 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.TransientPropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
- *
- * @author Jose
+ * Clase para gestionar coches: altas, bajas y modificaciones.
+ * @author Yolanda
  */
 public class GestorCoches {
-
+    /**
+     * Método que inserta un registro en la tabla coches con los datos pasados por
+     * parámetro.
+     * 
+     * @param matricula
+     * @param precio
+     * @param color
+     * @param marca
+     * @param fechaMatr 
+     */
     public void altaCoche(String matricula, float precio, String color,
             String marca, Date fechaMatr) {
 
@@ -34,7 +39,6 @@ public class GestorCoches {
 
         //Creamos un nuevo objeto coche
         Coches coche = new Coches();
-        coche.setIdCoche(new GetId().getIdCoche());
         coche.setMatricula(matricula);
         coche.setPrecio(precio);
         coche.setColor(color);
@@ -44,13 +48,28 @@ public class GestorCoches {
         try {
 
             sesion.save(coche);
-            trans.commit();
+            try {
+
+                trans.commit();
+            } catch (ConstraintViolationException e) {
+
+                System.out.println("Cliente duplicado");
+                System.out.println("Mensaje " + e.getMessage());
+                System.out.println("Cod. error " + e.getErrorCode());
+                System.out.println("Error sql" + e.getSQLException());
+
+            }
+
             JOptionPane.showMessageDialog(null, "Se ha insertado el coche " + coche.getIdCoche()
                     + "-Matrícula: " + coche.getMatricula());
-        } catch (ConstraintViolationException c) {
+        } catch (TransientPropertyValueException c) {
             System.out.println("Coche duplicado");
+            //Al ejecutarse el método save() puede detectar si exist el coche
+            System.out.println("ERROR: El coche no existe");
+            System.out.println("Mensaje: " + c.getMessage());
+            System.out.println("Propiedad: " + c.getPropertyName());
         } catch (Exception e) {
-            System.out.println("No se ha podido dar de alta..." +e.getMessage());
+            System.out.println("No se ha podido dar de alta..." + e.getMessage());
         } finally {
 
             sesion.close();
@@ -59,7 +78,10 @@ public class GestorCoches {
         }
 
     }
-
+    /**
+     * Método que elimina el registro de la tabla coches cuyo id es el indicado por parámetro.
+     * @param id 
+     */
     public void bajaCoche(int id) {
 
         SessionFactory factoria = HibernateUtil.getSessionFactory();
@@ -77,9 +99,7 @@ public class GestorCoches {
             JOptionPane.showMessageDialog(null, "Se ha eliminado el coche " + coche.getIdCoche()
                     + "-Matrícula: " + coche.getMatricula());
         } catch (ObjectNotFoundException o) {
-
             System.out.println("Error: no existe el coche: " + id);
-
         } catch (Exception e) {
 
             System.out.println("Error");
@@ -91,7 +111,14 @@ public class GestorCoches {
         System.exit(0);
 
     }
-
+    /**
+     * Método que modifica un registro de la tabla coches con los datos pasados por parámetro
+     * @param id
+     * @param precio
+     * @param color
+     * @param marca
+     * @param fecha 
+     */
     public void modificarCoche(int id, float precio, String color, String marca,
             Date fecha) {
 
@@ -111,7 +138,9 @@ public class GestorCoches {
             coche.setPrecio(precio);
             coche.setColor(color);
             coche.setMarca(marca);
-            if(!fecha.equals("") || fecha!=null) coche.setFechaMatriculacion(fecha);
+            if (fecha != null) {
+                coche.setFechaMatriculacion(fecha);
+            }
 
             sesion.update(coche);
             trans.commit();
@@ -125,9 +154,7 @@ public class GestorCoches {
                     + "-Matrícula: " + coche.getMatricula());
 
         } catch (ObjectNotFoundException o) {
-
-            System.out.println("Error: no existe el cliente: " + id);
-
+            System.out.println("Error: no existe el coche: " + id);
         } catch (Exception e) {
 
             System.out.println("Error");

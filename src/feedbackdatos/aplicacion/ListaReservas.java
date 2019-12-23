@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Clase wrapper para generar un XML de la tabla reservas
  * @author Jose
  */
 

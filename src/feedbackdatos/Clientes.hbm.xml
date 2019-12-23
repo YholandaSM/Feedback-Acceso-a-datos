@@ -6,7 +6,7 @@
     <class name="feedbackdatos.Clientes" table="clientes" catalog="feedback" optimistic-lock="version">
         <id name="idCliente" type="int">
             <column name="id_cliente" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="dni" type="string">
             <column name="dni" length="9" not-null="true" />

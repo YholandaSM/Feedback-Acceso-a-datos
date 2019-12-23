@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import javax.swing.JOptionPane;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -77,7 +76,7 @@ public class Consultas {
 
     /**
      * Método que comprueba si existe una reserva para el mismo coche en el
-     * periodo de fechas inidicadas.
+     * periodo de fechas indicadas.
      *
      * @param idCoche
      * @param fechaIni
@@ -182,17 +181,27 @@ public class Consultas {
         }
 
         List<Clientes> lista = query.list();
+        if (lista.size() == 0) {
 
-        for (Clientes c : lista) {
+            System.out.println("No hay clientes con esos criterios");
+        } else {
 
-            System.out.println(c);
+            for (Clientes c : lista) {
 
+                System.out.println(c);
+
+            }
         }
+
+        sesion.close();
+        System.exit(0);
 
     }
 
     /**
-     * Método que consulta coches por diferentes criterios: matricula y marca
+     * Método que consulta coches por diferentes criterios: matricula y marca. Hay 4
+     * posibilidades:1. que no se introduzca ningún parámetro(se listarán todos los coches),2. que introduzca
+     * sólo la matrícula, 3.que introduzca sólo la marca, 4.que introduzca ambos parámetros.
      *
      * @param matricula
      * @param marca
@@ -236,12 +245,21 @@ public class Consultas {
         }
 
         List<Coches> lista = query.list();
+        if (lista.size() == 0) {
+            System.out.println("No hay coches con esos criterios");
 
-        for (Coches c : lista) {
+        } else {
 
-            System.out.println(c);
+            for (Coches c : lista) {
+
+                System.out.println(c);
+
+            }
 
         }
+
+        sesion.close();
+        System.exit(0);
 
     }
 
@@ -249,7 +267,7 @@ public class Consultas {
      * *******************APARTADO 4**************************
      */
     /**
-     * 4.a Método que ofrece un listado de matrículas y números de reserva de
+     * 4.a Método que recupera un listado de matrículas y números de reserva de
      * los coches que están reservados hoy.
      *
      */
@@ -279,6 +297,9 @@ public class Consultas {
                     + coche.getMatricula() + " ,FECHAS: " + reserva.getFechaInicio() + " - "
                     + reserva.getFechaDevolucion());
         }
+
+        sesion.close();
+        System.exit(0);
 
     }
 
@@ -315,7 +336,8 @@ public class Consultas {
 
             System.out.println("No se han encontrado resultados");
         }
-
+        sesion.close();
+        System.exit(0);
     }
 
     /**
@@ -336,7 +358,9 @@ public class Consultas {
         Query query = sesion.createQuery(hql);
         query.setParameter("idCliente", idCliente);
         long numeroCoches = (long) query.uniqueResult();
-        System.out.println("El cliente "+idCliente+" ha reservado "+numeroCoches +" coches.");
+        System.out.println("El cliente " + idCliente + " ha reservado " + numeroCoches + " coches.");
+        sesion.close();
+        System.exit(0);
 
     }
 
@@ -359,6 +383,9 @@ public class Consultas {
         query.setParameter("idCoche", idCoche);
         long numero = (long) query.uniqueResult();
         System.out.println("El coche " + idCoche + " se ha reservado " + numero + " veces");
+
+        sesion.close();
+        System.exit(0);
 
     }
 

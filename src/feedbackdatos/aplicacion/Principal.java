@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package feedbackdatos.aplicacion;
 
 import java.text.ParseException;
@@ -11,12 +6,16 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
- * Método principal. Muestra un menú con 15 opciones.
+ * Clase en la que está el método main. 
  *
  * @author Yolanda
  */
 public class Principal {
-
+    
+    /**
+     * Método principal
+     * @param args 
+     */
     public static void main(String[] args) {
         int opcion = 0;
         try {
@@ -268,7 +267,7 @@ public class Principal {
         //Formateamos el campo precio si viene informado, sino se deja a 0.
         precio = JOptionPane.showInputDialog("Precio");
         if (!precio.equals("")) {
-            fPrecio = Float.parseFloat(JOptionPane.showInputDialog("Precio"));
+            fPrecio = Float.parseFloat(precio);
         }
 
         String color = JOptionPane.showInputDialog("color");
